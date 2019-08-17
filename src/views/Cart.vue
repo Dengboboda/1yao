@@ -18,22 +18,24 @@
                 </div>
                 <!-- 购物车页面 -->
                 <div class="cart_empty">
-                    <van-checkbox v-model="checked">
-                      
-                    </van-checkbox>
-                      <van-card :num="num0" price="2.00" desc="描述信息" title="商品标题" thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" >
-                        <div slot="footer" style="z-index:10000">
-                     <van-button size="mini" @click="sub()">-</van-button>
-                     <input type="text" v-model="num0" style="width:40px;">
-                     <van-button size="mini" @click="add()">+</van-button>
-                 </div>        
-                        </van-card >
-                    
+                    <div class="cart_box" v-for="(item, index) in this.$store.state.cart" :key="index">
+                        <van-checkbox v-model="item.isok">
+
+                        </van-checkbox>
+                        <van-card :num="num0" :price="item.goodsPrice" desc="" :title="item.goodstitle" :thumb="item.goodsPics">
+                            <div slot="footer" style="z-index:10000">
+                                <van-button size="mini" @click="sub()">-</van-button>
+                                <input type="text" v-model="item.count" style="width:40px;">
+                                <van-button size="mini" @click="add()">+</van-button>
+                            </div>
+                        </van-card>
+
+                    </div>
 
                 </div>
                 <!-- 提交工具 -->
 
-                <van-submit-bar :price="3050" button-text="提交订单" />
+                <van-submit-bar :price="$store.getters.getallprice" button-text="提交订单" />
             </van-tab>
 
             <!-- 选项2 -->
@@ -57,11 +59,11 @@
 <script>
 export default {
   data() {
-    return{
-        checked: true,
-        num0:2,
-
-    }
+    return {
+      checked: true,
+      num0: 2,
+      tprice: 3050
+    };
   },
   methods: {
     onClick(name, title) {
@@ -71,25 +73,32 @@ export default {
       this.$router.go(-1); //返回上一层
     },
     //点击增加按钮
-    add(){
-        this.num0++
+    add() {
+      this.num0++;
     },
     //点击按钮减少
-    sub(){
-        
-        if(this.num0==0){
-            this.num0==0;
-        };
-        if(this.num0>0){
-            this.num0--;
-
-        }
+    sub() {
+      if (this.num0 == 0) {
+        this.num0 == 0;
+      }
+      if (this.num0 > 0) {
+        this.num0--;
+      }
     }
+  },
+  //计算属性
+  computed: {
+
+  },
+  created() {
+    let abc = this.$store.state.cart;
+    // console.log(abc);
   }
 };
 </script>
 <style>
 /* // 头部 */
+
 .header_pic {
   position: absolute;
   top: 13px;
@@ -111,7 +120,7 @@ export default {
   height: 0.69333333rem;
   line-height: 0.69333333rem;
   width: 100%;
-  position: fixed;
+  position: absolute;
   top: 1.14666667rem;
   left: 0;
   background: #fff;
@@ -146,17 +155,19 @@ export default {
 /*选择框*/
 #cart .cart_empty {
   margin-top: 50px;
-  display: flex;
   width: 100%;
 }
 /* #cart .van-checkbox .van-checkbox__label{
     width: 375px;
 
 } */
-#cart .van-card{
-    width: 375px;
+#cart .van-card {
+  width: 375px;
 }
-
+#cart .cart_box {
+  display: flex;
+  width: 100%;
+}
 </style>
 
 

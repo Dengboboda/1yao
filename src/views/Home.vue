@@ -84,7 +84,7 @@
     <van-tabbar v-model="active" style="font-size: 25px;" replace="true">
   <van-tabbar-item icon="home-o" >首页</van-tabbar-item>
   <van-tabbar-item icon="search" to="/about">找药</van-tabbar-item>
-  <van-tabbar-item icon="shopping-cart-o" to="/cart">购物车</van-tabbar-item>
+  <van-tabbar-item icon="shopping-cart-o" to="/cart" :info="$store.getters.getallcount">购物车</van-tabbar-item>
   <van-tabbar-item icon="contact" to="/we">我的</van-tabbar-item>
 </van-tabbar>
 

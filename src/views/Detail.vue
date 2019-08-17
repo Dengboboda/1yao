@@ -298,11 +298,18 @@
         </div>
         <!-- 商品导航 -->
         <van-goods-action>
-            <van-goods-action-icon icon="chat-o" text="客服" @click="onClickIcon" />
-            <van-goods-action-icon icon="cart-o" text="购物车" @click="onClickIcon" to="/cart" />
+            <van-goods-action-icon icon="chat-o" text="客服"  />
+            <van-goods-action-icon icon="cart-o" text="购物车"  to="/cart" />
             <van-goods-action-button type="warning" text="加入购物车" @click="onClickButton" />
-            <van-goods-action-button type="danger" text="立即购买" @click="onClickButton" />
+            <van-goods-action-button type="danger" text="立即购买" />
         </van-goods-action>
+         <!-- 底部标签 -->
+    <van-tabbar v-model="active" style="font-size: 25px;">
+      <van-tabbar-item icon="home-o" to="/home">首页</van-tabbar-item>
+      <van-tabbar-item icon="search" to="/about">找药</van-tabbar-item>
+      <van-tabbar-item icon="shopping-cart-o" to="/cart" :info="$store.getters.getallcount">购物车</van-tabbar-item>
+      <van-tabbar-item icon="contact" to="/we">我的</van-tabbar-item>
+    </van-tabbar>
     
 
     </div>
@@ -328,7 +335,9 @@ export default {
       curId: 0,
       current: 0,
       images: [],
-      massege:[]
+      massege:[],
+      active:''
+
     };
   },
   methods: {
@@ -348,9 +357,18 @@ export default {
     onClickIcon() {
       Toast('点击图标');
     },
+    //点击加入购物车
     onClickButton() {
-      Toast('点击按钮');
+      var goodsinfor = {
+      goodsId:this.id,
+      count:1,
+      goodsPrice:this.massege.price,
+      goodsPics:this.massege.BigPic,
+      goodstitle:this.massege.title,
+      isok:true}
+      this.$store.commit('AddCart',goodsinfor)
     }
+   
   },
   mounted(){
     // import detail from '../vant/detail.js'
@@ -413,7 +431,7 @@ export default {
     );
     this.massege = massege.data.data[this.id]
 
-    console.log(massege.data.data[this.id]);
+    // console.log(massege.data.data[this.id]);
   },
 
 };
@@ -988,6 +1006,10 @@ export default {
 #detail .bottom{
     height: 70px;
     width: 100%;
+}
+/* //底部购物栏 */
+#detail .van-goods-action {
+  bottom: 50px;
 }
 
 

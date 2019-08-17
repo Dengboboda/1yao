@@ -192,7 +192,7 @@ export default {
     );
     this.list = list.data.data
 
-    console.log(list.data.data);
+    // console.log(list.data.data);
   }
 };
 </script>
